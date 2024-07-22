@@ -1,26 +1,20 @@
 module.exports = {
-    dataProvider:{
-        users: [
-            { username: 'standard_user', password: 'secret_sauce' },
-            { username: 'problem_user', password: 'secret_sauce' },
-            { username: 'performance_glitch_user', password: 'secret_sauce' },
-            { username: 'error_user', password: 'secret_sauce' },
-            { username: 'visual_user', password: 'secret_sauce' }
-        ],
-        locked_users: [
-            { username: 'locked_out_user', password: 'secret_sauce' }
-        ],
-        getRandomUsername: function(){
-            return this.users[Math.floor(Math.floor(Math.random() * this.users.length))].username;
-        },
-        getPassword: function(){
-            return 'secret_sauce';
-        },
-        getFakeUsername: function(){
-            return 'fake_username';
-        },
-        getFakePassword: function(){
-            return 'fakepass';
-        }
+    usernames: {
+        standard_user: 'standard_user',
+        problem_user: 'problem_user',
+        performance_glitch_user: 'performance_glitch_user',
+        error_user: 'error_user',
+        visual_user: 'visual_user',
+        locked_out_user: 'locked_out_user'
+    },
+    passwords: {
+        secret_sauce: 'secret_sauce'
+    },
+    errors:{
+        username_error: 'Epic sadface: Username is required',
+        password_error: 'Epic sadface: Password is required'
+    },
+    titles: {
+        swag_labs: 'Swag Labs'
     }
 }

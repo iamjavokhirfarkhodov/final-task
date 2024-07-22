@@ -1,7 +1,7 @@
 const logger = require('../../config/winston_logger')
 const LoginPage = require('../../po/login.page');
 const DashboardPage = require('../../po/dashboard.page');
-const { dataProvider } = require('../../config/data');
+const { usernames, passwords, errors, titles } = require('../../config/data');
 const setUsernameAndPassword = require('../../utils/clearfix');
 const loginPage = new LoginPage();
 const dashboardPage = new DashboardPage();
@@ -16,11 +16,10 @@ describe('Final Task',() => {
         logger.info('UC-1 has started!')
 
         //Given username and password
-        const username = dataProvider.getFakeUsername();
-        await setUsernameAndPassword(username, dataProvider.getFakePassword());
-        expect(await loginPage.username.getValue()).toEqual(username);
-        expect(await loginPage.password.getValue()).toEqual(dataProvider.getFakePassword());
-        logger.info(`Credentials: Username: ${username}, password: ${dataProvider.getFakePassword()} assigned`);
+        await setUsernameAndPassword(usernames.standard_user, passwords.secret_sauce);
+        expect(await loginPage.username.getValue()).toEqual(usernames.standard_user);
+        expect(await loginPage.password.getValue()).toEqual(passwords.secret_sauce);
+        logger.info(`Credentials: Username: ${usernames.standard_user}, password: ${passwords.secret_sauce} assigned`);
 
         //When username and password is cleared
         await loginPage.username.clearValue();
@@ -36,7 +35,7 @@ describe('Final Task',() => {
         //Then error message should be displayed
         await loginPage.errorMessage.waitForDisplayed();
         expect(await loginPage.errorMessage.isDisplayed()).toBe(true);
-        expect(await loginPage.errorMessage.getText()).toEqual('Epic sadface: Username is required');
+        expect(await loginPage.errorMessage.getText()).toEqual(errors.username_error);
 
         logger.info('Error message displayed!');
         logger.info('UC-1 has finished successfully!');
@@ -46,14 +45,13 @@ describe('Final Task',() => {
         logger.info('UC-2 has started!');
 
         //Given username and password
-        const username = dataProvider.getFakeUsername();
-        await setUsernameAndPassword(username, dataProvider.getFakePassword());
-        expect(await loginPage.username.getValue()).toEqual(username);
-        expect(await loginPage.password.getValue()).toEqual(dataProvider.getFakePassword());
-        logger.info(`Credentials: Username: ${username}, password: ${dataProvider.getFakePassword()} assigned`);
+        await setUsernameAndPassword(usernames.standard_user, passwords.secret_sauce);
+        expect(await loginPage.username.getValue()).toEqual(usernames.standard_user);
+        expect(await loginPage.password.getValue()).toEqual(passwords.secret_sauce);
+        logger.info(`Credentials: Username: ${usernames.standard_user}, password: ${passwords.secret_sauce} assigned`);
 
         //Clearfix for Google Chrome
-        await loginPage.username.setValue(username);
+        await loginPage.username.setValue(usernames.standard_user);
 
         //When password is cleared and login button clicked
         await loginPage.password.clearValue();
@@ -64,7 +62,7 @@ describe('Final Task',() => {
         // Then error message should be displayed
         await loginPage.errorMessage.waitForDisplayed();
         expect(await loginPage.errorMessage.isDisplayed()).toBe(true);
-        expect(await loginPage.errorMessage.getText()).toEqual('Epic sadface: Password is required');
+        expect(await loginPage.errorMessage.getText()).toEqual(errors.password_error);
         
         logger.info('Error message displayed!');
         logger.info('UC-2 has finished successfully!');
@@ -74,10 +72,9 @@ describe('Final Task',() => {
         logger.info('UC-3 has started!');
 
         //Given valid credentials
-        const username = dataProvider.getRandomUsername();
-        await loginPage.username.setValue(username);
-        await loginPage.password.setValue(dataProvider.getPassword());
-        logger.info(`Credentials: Username: ${username}, password: ${dataProvider.getPassword()} assigned`);
+        await loginPage.username.setValue(usernames.standard_user);
+        await loginPage.password.setValue(passwords.secret_sauce);
+        logger.info(`Credentials: Username: ${usernames.standard_user}, password: ${passwords.secret_sauce} assigned`);
 
         //When login button clicked
         await loginPage.loginBtn.click();
@@ -85,7 +82,7 @@ describe('Final Task',() => {
 
         //Then dashboard should show title
         await dashboardPage.dashboardTitle.waitForDisplayed();
-        expect(await dashboardPage.dashboardTitle.getText()).toEqual('Swag Labs');
+        expect(await dashboardPage.dashboardTitle.getText()).toEqual(titles.swag_labs);
         
         logger.info('"Swag Labs" title is displayed!');
         logger.info('UC-3 has finished successfully!');
